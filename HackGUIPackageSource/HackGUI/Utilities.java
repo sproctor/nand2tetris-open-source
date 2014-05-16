@@ -106,7 +106,8 @@ public class Utilities {
         JScrollBar bar = scrollPane.getVerticalScrollBar();
         int beforeScrollValue = bar.getValue();
         Rectangle r = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(r);
+	if(r != null)
+        	table.scrollRectToVisible(r);
         panel.repaint();
         int afterScrollValue = bar.getValue();
         double visibleRowsCount = computeVisibleRowsCount(table);
@@ -114,13 +115,15 @@ public class Utilities {
         // The scroller moved down
         if (afterScrollValue > beforeScrollValue) {
             Rectangle newRectangle = table.getCellRect((int)(Math.min(row + visibleRowsCount / 2,table.getRowCount()-1)) , 0, true);
-            table.scrollRectToVisible(newRectangle);
+            if(newRectangle != null)
+                table.scrollRectToVisible(newRectangle);
             panel.repaint();
         }
         // The scroller moved up.
         else if (afterScrollValue < beforeScrollValue){
             Rectangle newRectangle = table.getCellRect((int)(Math.max(row - visibleRowsCount / 2,0)) , 0, true);
-            table.scrollRectToVisible(newRectangle);
+            if(newRectangle != null)
+                table.scrollRectToVisible(newRectangle);
             panel.repaint();
         }
     }
